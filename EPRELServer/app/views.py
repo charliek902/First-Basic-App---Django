@@ -12,7 +12,7 @@ import pandas as pd
 import traceback
 import io
 
-
+@csrf_exempt
 @require_POST
 def search(request):
     if request.method == 'POST':
@@ -64,7 +64,7 @@ def search(request):
         response = JsonResponse(response_data)
 
         # Set the CORS headers
-        response["Access-Control-Allow-Origin"] = "http://eusmarttvlibrary.com"
+        response["Access-Control-Allow-Origin"] = "http://localhost:8000/"
         response["Access-Control-Allow-Methods"] = "GET, POST"
         response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
 
@@ -72,7 +72,7 @@ def search(request):
     else:
         return HttpResponseBadRequest("Invalid request method")
     
-
+@csrf_exempt
 @require_GET
 def data_view(request):
     # actually give the option to download the data from this library 
@@ -83,7 +83,7 @@ def data_view(request):
             response = JsonResponse(data)
 
             # Set the CORS headers
-            response["Access-Control-Allow-Origin"] = "http://eusmarttvlibrary.com"
+            response["Access-Control-Allow-Origin"] = "http://localhost:8000/"
             response["Access-Control-Allow-Methods"] = "GET, POST"
             response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             # Process the data if needed
@@ -91,7 +91,7 @@ def data_view(request):
         except Exception as e:
             return JsonResponse({'error': str(e)})
 
-
+@csrf_exempt
 @require_POST
 def parse_excel(request):
     try:
@@ -136,7 +136,7 @@ def parse_excel(request):
             response.write(excel_file.getvalue())
 
                 # Set the CORS headers
-            response["Access-Control-Allow-Origin"] = "http://eusmarttvlibrary.com"
+            response["Access-Control-Allow-Origin"] = "http://localhost:8000/"
             response["Access-Control-Allow-Methods"] = "GET, POST"
             response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
@@ -146,13 +146,13 @@ def parse_excel(request):
 
     return HttpResponse("Invalid request", status=400)
 
-
+@csrf_exempt
 @require_GET
 def home(request):
     try:
         if request.method == 'GET':
             response = render(request,'libraryInterface.html', context = None, content_type=None, using=None)
-            response["Access-Control-Allow-Origin"] = "http://eusmarttvlibrary.com"
+            response["Access-Control-Allow-Origin"] = "http://localhost:8000/"
             response["Access-Control-Allow-Methods"] = "GET, POST"
             response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
@@ -168,7 +168,7 @@ def show_documentation(request):
     try:
         if request.method == 'GET':
             response = render(request,'documentation.html', context = None, content_type=None, using=None)
-            response["Access-Control-Allow-Origin"] = "http://eusmarttvlibrary/doc"
+            response["Access-Control-Allow-Origin"] = "http://localhost:8000/doc"
             response["Access-Control-Allow-Methods"] = "GET, POST"
             response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response

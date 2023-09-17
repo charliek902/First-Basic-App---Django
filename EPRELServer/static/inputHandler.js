@@ -19,7 +19,7 @@ document.getElementById('JSON').addEventListener('click', function(event){
   var xhr = new XMLHttpRequest();
 
   // Configure the AJAX request
-  xhr.open('GET', 'http://eusmarttvlibrary.com/api/data/', true);
+  xhr.open('GET', 'http://localhost:8000/api/data/', true);
   xhr.responseType = 'blob'; // Set the response type to 'blob' for binary data
   xhr.setRequestHeader('Content-Type', 'application/json');
 
@@ -59,7 +59,7 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
 
   var xhr = new XMLHttpRequest();
 
-  xhr.open('POST', 'http://eusmarttvlibrary.com/api/search/', true);
+  xhr.open('POST', 'http://localhost:8000/api/search/', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
 
   var data = {
@@ -144,7 +144,7 @@ document.getElementById('parse').addEventListener('submit', function(event) {
 
   var xhr = new XMLHttpRequest();
 
-  xhr.open('POST', 'http://eusmarttvlibrary.com/api/parse_excel/', true);
+  xhr.open('POST', 'http://localhost:8000/api/parse_excel/', true);
   var fileInput = document.getElementById('FileInput');
   var file = fileInput.files[0];
 

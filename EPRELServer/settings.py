@@ -31,9 +31,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR / 'EPRELServer' / 'static')]
 SECRET_KEY = 'django-insecure-t^11)u55g%303!3tzo)1umj%m27d&nyp36&1rahw%^8@98b4*c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['eusmarttvlibrary.com']
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -90,7 +90,7 @@ DATABASES = {
         'NAME': 'EPREL',
         'USER': 'root',
         'PASSWORD': '#Carlosknox1',
-        'HOST': 'eusmarttvlibrary.com',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
