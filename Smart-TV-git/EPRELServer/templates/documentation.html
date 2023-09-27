@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>European Commission Product Database Library- Documentation</title>
+
+</head>
+<body>
+       <h1><u>Documentation for the European Product Database TV/Smart TV Library</u></h1>
+       <h2><u>General</u></h2>
+       <p>Welcome to this library, it contains all the TVs, displays and Monitors within the European Commission's Product Database.
+        The library itself contains 15,400 results!
+       </p>
+       
+       <p>In this library, you have the ability to perform two primary functions. First, you can search for energy data related to TVs 
+        (including Smart TVs) using the provided search feature.  Second, you can upload your own files containing TV information, 
+        which will be processed to generate an Excel file associating your TVs with their corresponding energy data. 
+       </p>
+       <h2><u>Searching the library</u></h2>
+
+       <p>When searching the library, there are 3 options that you can change or choose from. The first two are simply a search for the TV's brand
+        the second is a search for the TV's model number and the third is a drop down which 
+        will return different metrics on the energy data of TV devices. There are three energy class options which you can choose from, 
+        an overall energy class for each TV ranging from A which represents high efficiency to G which represents an inefficient device 
+        (this data is all according to the European Union Product Database determinations), and an energy class for the TV's standard dynamic range 
+        and another for its high dynamic range. Lastly, there are two options which represent the amount of Watts produced 
+        during standard and high dynamic range for the TV when in use.
+
+        <br>
+        The search fuction is case insensitive 
+        and if you want to search for a brand name, ensure that you write down the brand's name first. For example, if you want 
+        to search for LG TV's; LG or LG electronics would be fine, but electronics LG would not return any results. 
+        Here are other examples of the most frequent brands in the library which by inputting them would succesfully return results: <br>
+        samsung <br>
+        TCL <br>
+        IIYAMA <br>
+        Please note that the search parameters are optional. If you were not to include any paramters in the search funciton, all the results 
+        would be returned from the database. If you were to just include the brand name of a device, all the results for that brand name would be returned
+        <br>
+        </p>
+
+       <h2><u>Parsing your excel file</u></h2>
+       <p><b>Column Setup:</b>
+       Prior to parsing, ensure that your Excel file includes the following columns: <br>
+        
+        Device Brand: Create or edit a column with the header <b>device_brand</b> to specify the TV's brand. <br>
+        Device Model: Create or edit a column with the header <b>device_model</b> to specify the TV's model number.<br>
+        These two column headers are essential for successful parsing. If you fail to this, no excel file will appear</p>
+       
+       <p><b>Parsing Process:</b> When you parse the Excel file with these designated columns, an automatic download will commence 
+        in your web browser. The downloaded file will contain the corresponding energy data for the TVs, 
+        presented as new columns alongside the TV information. Importantly, this process will not erase 
+        any other data in your original Excel file, allowing you to retain any additional information you may have included.
+        <br>
+        <b>Data Privacy:</b> Your Excel data will not be stored in our database at any point during this process.
+        To ensure alignment with the library's data, please make sure that the "device_brand" column accurately reflects the TV's actual brand. 
+        For example, entries like "Samsung," "TCL," or "IIYAMA" in the "device_brand" column will yield successful parsing results.
+       </p>
+
+       <h2><u>Further Developments</u></h2>
+       <p>Please note that this library is a prototype and more features will be added to it. This will include the 
+        ability to parse tv strings from an excel file and the ability to observe whether Smart TVs in your dataset are being used during 
+        peaks in data traffic within a live dashboard (you will have to input times of use in your excel file). 
+        Please also note that the search function does not have its headers come down as you scroll down and that is due to problems with 
+        rendering my css files. I will sort this out in the final application</p>
+       <br>
+</body>
+</html>
