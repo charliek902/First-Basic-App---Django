@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>European Commission Product Database Library- TVs and displays</title>
+ <!-- <link rel="stylesheet" href="{% static 'EPREL.css'%}"> -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container library-container">
+      <h1 class="text-center mt-5">European Union Product Database: TVs, displays, and Monitors Library</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <h2 class="mt-4">Search Library:</h2>
+          <button id = "clear" type="submit" class="btn btn-primary col-md-3">Clear</button>
+          <form id="myForm" method="POST">
+            {% csrf_token %}
+            <div class="form-row mt-4">
+              <div class="col-md-6 mb-3">
+                <label for="manufacturer">Manufacturer:</label>
+                <input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="Type brand of device">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="model_number">Model Number:</label>
+                <input type="text" class="form-control" id="model_number" name="model_number" placeholder="Type model number">
+              </div>
+              <div class="col-md-12 mb-3">
+                <label for="FilterDatabase">Filter Database:</label>
+                <select class="form-control" id="FilterDatabase" name="filter">
+                    <option value="Overall Energy Class" >Overall Energy Class</option>
+                    <option value="Standard Dynamic Range">Standard Dynamic Range</option>
+                    <option value="High Dynamic Range">High Dynamic Range</option>
+                    <option value="Energy Class HDR">Energy Class HDR</option>
+                    <option value="Energy Class SDR">Energy Class SDR</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                <button class="btn btn-primary btn-block" id="button" type="submit">Search</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <h2 class="mt-4">Input Data Analytics:</h2>
+          <div class="form-group">
+            <form id="parse" method="POST">
+              {% csrf_token %}
+              <label for="FileInput">Upload Excel File:</label>
+              <input type="file" class="form-control-file" id="FileInput" name="FileInput">
+              <div class="form-row">
+                <div class="col-md-16">
+                  <button id="button" type="submit" class="btn btn-primary btn-block">Get Energy Data</button>
+                </div>
+              </div>
+            </form>
+          </div>
+      </div>
+      <div id="searchingBar"></div>
+        <div id="table-container">
+            <div class="table-header">
+            <table class="table" id="tableHeader">
+                <!-- Table header content will be dynamically added here -->
+            </table>
+            </div>
+            <div class="table-body scrollable-table">
+            <table class="table" id="tableBody">
+                <!-- Table body content will be dynamically added here -->
+            </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="{% static 'inputHandler.js' %}"></script>
+    <script>
+      var csrfToken = "{{ csrf_token }}";
+    </script>    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+</body>
+</html>
