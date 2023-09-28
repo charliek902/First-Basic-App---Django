@@ -29,7 +29,7 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
 
   var xhr = new XMLHttpRequest();
 
-  xhr.open('POST', 'http://localhost:8000/api/search/', true);
+  xhr.open('POST', '/api/search/', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('X-CSRFToken', csrfToken); // Include the CSRF token
 
@@ -115,7 +115,7 @@ document.getElementById('parse').addEventListener('submit', function(event) {
 
   var xhr = new XMLHttpRequest();
 
-  xhr.open('POST', 'http://localhost:8000/api/parse_excel/', true);
+  xhr.open('POST', '/api/parse_excel/', true);
   xhr.setRequestHeader('X-CSRFToken', csrfToken); // Include the CSRF token
   var fileInput = document.getElementById('FileInput');
   var file = fileInput.files[0];
