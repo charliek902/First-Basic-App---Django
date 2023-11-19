@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>European Commission Product Database Library- TVs and displays</title>
+       <!-- <link rel="stylesheet" href="{% static 'EPREL.css'%}"> -->
+       <link rel="stylesheet" type="text/css" href="{% static 'background.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      </head>
+
+      {% include "header.html" %}
+
+      <h1>API</h1>
+      <h2 class="indented-paragraph" class="centerHeader" class="subHeaders"> About this API</h2>
+      <br>
+
+      <p class="indented-paragraph">The API for this website will allow clients to send json data specifying the location they are in, the time of day and what type of TV is being used. 
+        In response the API will return the time of peak data traffic for that day. </p>
+        <p class="indented-paragraph">Additionally, clients can also send the brands and model numbers of TVs to this API and in response, the API will 
+          send the energy class of the TV from A to G with A representing energy efficient and G representing energy inefficiency. </p>
+      <p class="indented-paragraph">If you are not within one of these areas, you can send a request to the API which will return the time of 
+        average peak data traffic amongst all of these regions. If your users are not using a TV, please specify the attributes model and brand within the JSON request as 'null'. </p>
+
+      <h2 class="indented-paragraph" class="subHeaders"> How to use the API</h2>
+      <br>
+      <p class="indented-paragraph">To use this API, please send JSON post request to the url: http://localhost:8000/api/</p>
+      <p class="indented-paragraph">Within this post request you need to write the attributes location, day, brand and model like so: </p>
+      <p class="indented-paragraph">
+        {
+          "location": "outer london",
+          "day": "saturday", 
+          "brand": "samsung",
+          "model": "HG50EJ690YA"
+        }
+      </p>
+      <p class="indented-paragraph">
+        To specify the location please use (location JSON attributes are case insensitive): <p>
+      <p class="indented-paragraph">
+          North America <br>
+          inner London <br>
+          outer London <br>
+          Nairobi <br>
+          Manchester <br>
+          Scotland <br>
+          Wales <br>
+          Middle East
+      </p>
+      <p class="indented-paragraph">
+        To specify the day please use any day of the week (do not input dates, inputs are also case insensitive):  
+       To specify the brand please use the brand name. Examples of brands that would be recognized 
+        include samsung, panasonic, TCL. Please note that brand names are case insensitive. 
+       Please ensure that the model number is as accurate as possible as the model attribute of the JSON request is case sensitive. 
+      Alternatively, if the device is not a TV, please specify the TV model and brand within the JSON request as 'null'.</p>
+      
+      <p class="indented-paragraph">
+      In response, the api will return a peak value which will represent the average peak data traffic time for that day.  The API will also return the overall energy class, the energy class in 
+        standard dynamic range and the energy class in high dynamic range if a TV is both included within the JSON request and within the site's TV database. Here is an example JSON response:
+      </p>
+      <p class="indented-paragraph">
+        {
+          "peak": "09:00:00 GMT",
+          "energy data": {
+              "energy data": [
+                  {
+                      "energy_class": "E",
+                      "energy_class_sdr": "E",
+                      "energy_class_hdr": "NA"
+                  }
+              ]
+          }
+      }
+      </p>
+      <p class="indented-paragraph">Click on the link for an explanation for the energy metrics within the API JSON responses:</p>
+      <a class="indented-paragraph" href="https://commission.europa.eu/energy-climate-change-environment/standards-tools-and-labels/products-labelling-rules-and-requirements/energy-label-and-ecodesign/energy-efficient-products/electronic-displays-including-televisions_en" target="_blank">Energy product Registry</a>
+      <br>
+      <br>
+      <h2 class="indented-paragraph" class="centerHeader" class="subHeaders"> Invalid Responses and no corresponding TVs Response</h2>
+      <br>
+      <p class="indented-paragraph"> The times will always be in UTC so depending on your location, please handle the conversion in time appropriately. Additionally, if your API request
+        does not conform to the location and day attributes above by either being an invalid location orday or being invalid in JSON structure, you will receive a specific error 
+        response detailing your error like so:  </p>
+        <p class="indented-paragraph"> 
+        {
+          "error": "Invalid day"
+        }
+        </p>
+        <p class="indented-paragraph"> 
+        {
+          "error": "Invalid location"
+        }
+        </p>
+        <p class="indented-paragraph"> 
+        {
+          "error": "Invalid JSON in request body"
+        }
+        <p>
+        <p class="indented-paragraph">If the day and location are valid and the TV sent does not correspond with the TVs stored within the site's database, 
+          the API will respond like so:
+        </p>
+        <p class="indented-paragraph">
+            {
+              "peak": "09:00:00 GMT",
+              "energy data": {
+                  "energy data": "No TV corresponds with TV sent in API request"
+              }
+          }
+        </p>
+        <h2 class="indented-paragraph" class="centerHeader" class="subHeaders"> Here are some valid JSON request examples</h2>
+        <br>
+        <p class="indented-paragraph">
+          {
+            "location": "outer london",
+            "day": "monday",
+            "model": "HG75EJ690YA",
+            "brand": "samsung"
+          }
+        </p>
+        <p class="indented-paragraph">
+          {
+            "location": "middle east",
+            "day": "Friday",
+            "model": "null",
+            "brand": "null"
+          }
+        </p>
+
+        <br>
+        <br>
+        <br>
+
+        
+
+
+
+{% include "footer.html" %}

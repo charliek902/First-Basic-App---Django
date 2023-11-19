@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,8 +26,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR / 'EPRELServer' / 'app' / 'static')]
 
 # settings.py
-
-STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -148,9 +148,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ORIGIN_WHITELIST = [
     'null',  # Add the allowed frontend origin(s) here
 ]
-
-
-
 
 CORS_ALLOW_METHODS = [
     'GET',
