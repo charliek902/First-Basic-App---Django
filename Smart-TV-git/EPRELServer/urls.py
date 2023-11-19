@@ -24,23 +24,23 @@ from django.views.static import serve
 
 urlpatterns = [
 
-    path('', views.home, name='home'),
+    path('', views.displayHomePage, name='home'),
+    path('search/', views.searchLibrary, name='searchLibrary'),
     path('api/search/', views.search, name='search'),
-    path('api/parse_excel/', views.parse_excel, name='parse_excel'),
-    path('doc/', views.show_documentation, name='documentation'),
-    path('<path:undefined_path>/', views.anyOtherRequest, name='any_other_request'),
+    path('TVDataParser/api/parse_excel/', views.parse_excel, name='parse_excel'),
+    #path('doc/', views.show_documentation, name='documentation'),
+    path('TVDataParser/', views.show_DataAnalytics_page, name='data analytics'),
+    path('APIPage/', views.showAPI, name= 'API'),
+    path('liveDashboardPage/', views.showLiveDashboardMonthly, name='liveDashboard'),
+    path('liveDashboardPage/', views.showLiveDashboardMonthly, name='liveDashboard'),
+    path('search/explanation.txt/', views.showExplanation, name= 'explanation'),
+    #path('liveDashboardDaily/', views.getDashboardDaily, name='liveDashboard1'),
+    #path('liveDashboardParser/', views.getDashboardParsed, name='liveDashboard2'),
+    path('api/', views.apiEndpoint, name='apiEndpoint'),
+    path('<path:undefined_path>/', views.display404, name='any_other_request'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-    # Serve .js files with 'application/javascript' MIME type
-    urlpatterns += [
-        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT, 'show_indexes': True, 'mimetype': 'application/javascript'}),
-        
-        # Add a URL pattern for serving EPREL.css with 'text/css' MIME type
-        re_path(r'^static/EPREL\.css$', serve, {'document_root': settings.STATIC_ROOT, 'show_indexes': True, 'mimetype': 'text/css'}),
-    ]
 
 
 

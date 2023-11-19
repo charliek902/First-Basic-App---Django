@@ -1,0 +1,29 @@
+{% load static %}
+
+<!--http-equiv="X-Frame-Options" content="allow"-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" http-equiv="X-Frame-Options" content="allow">
+        <title>European Commission Product Database Library- TVs and displays</title>
+       <!-- <link rel="stylesheet" href="{% static 'EPREL.css'%}"> -->
+       <link rel="stylesheet" type="text/css" href="{% static 'background.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      </head>
+
+      {% include "header.html" %}
+
+      <h1 class="centerHeader">LINX Dashboards</h1>
+
+      <h2 class = "indented-paragraph">Monthly Dashboard</h2>
+
+      {% include "dashboardMonthly.html" %}
+
+<script>
+  var csrfToken = "{{ csrf_token }}";
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% include "footer.html" %}

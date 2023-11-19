@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>European Commission Product Database Library- TVs and displays</title>
+       <!-- <link rel="stylesheet" href="{% static 'EPREL.css'%}"> -->
+       <link rel="stylesheet" type="text/css" href="{% static 'background.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      </head>
+
+{% include "header.html" %}
+
+<h1 class="centerHeader">Daily Live Dashboard Parser</h1>
+
+<div class= "DataAnalyticsCentre">
+    <div class="container d-flex justify-content-center align-items-center" class="positionForm" style="height: 55vh;">
+      <form id="parseDashboard" method="POST" class="form-group text-center">
+         {% csrf_token %}
+          <label for="FileInput">Upload .xlsx File:</label>
+          <input type="file" class="form-control-file" id="FileInput" name="FileInput">
+          <button id="button" type="submit" class="btn btn-primary">Parse excel file and observe data within dashboard</button>
+      </form>
+    </div>
+  </div>
+
+
+  <script src="{% static 'dashboardHandler.js' %}"></script>
+  <script>
+    var csrfToken = "{{ csrf_token }}";
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+{% include "footer.html" %}
+
