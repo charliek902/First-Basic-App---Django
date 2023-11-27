@@ -20,12 +20,12 @@ import requests
 def apiEndpoint(request):
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
+            dataAPI = json.loads(request.body)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON in request body'}, status=400)
     
-        location = data['location'].lower()
-        day = data['day'].lower()
+        location = dataAPI['location'].lower()
+        day = dataAPI['day'].lower()
 
         day_dictionary = {'monday': 2, 'tuesday': 3, 'wednesday': 4, 'thursday': 5, 'friday': 6, 'saturday': 7, 'sunday': 1 }
         try:
@@ -33,26 +33,94 @@ def apiEndpoint(request):
         except:
             return JsonResponse({'error': 'Invalid day'}, status=400)
         
-        location_dictionary = {'middle east': 'jed1', 'wales': 'car1', 'inner london': 'lon1', 'outer london': 'lon2', 'manchester': 'man1', 
+        location_dictionary = {'middle east': 'jed1', 'wales': 'car1', 'london': 'lon1', 'manchester': 'man1', 
                                'scotland': 'sco1', 'north america': 'nva1', 'nairobi': 'nai1', 'general': 'general', 'the middle east': 'jed1'}
         try:
             locationReq = location_dictionary[location]
         except:
             return JsonResponse({'error': 'Invalid location'}, status=400)
         
+        agent_string = dataAPI['tv_agent_string']
+        if agent_string != 'null':
+            agent_string = agent_string.replace('/', ' ')
+            agent_string = agent_string.replace('-', ' ')
+            agent_string = agent_string.replace('(', ' ')
+            agent_string = agent_string.replace(')', ' ')
+            agent_string = agent_string.replace(',', ' ')
+            agent_string = agent_string.replace(';', ' ')
+
+            mysql_connection = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="#Carlosknox1",
+                database="EPREL"
+            )
+            sql_query = (
+            f"SELECT manufacturer from new_energyLibrary GROUP BY manufacturer;"
+            )
+            cursor = mysql_connection.cursor(dictionary=True)
+            cursor.execute(sql_query)
+            results = cursor.fetchall()
+            brands = set()
+
+            foundBrand = False
+
+            for result in results:
+                if result['manufacturer'] is None:
+                    continue
+                elif len(result['manufacturer'].split()) > 1:
+                    main_brand = result['manufacturer'].split()[0]
+                    brands.add(main_brand)
+                else:
+                    main_brand = result['manufacturer']
+
+            brand_in_agent_string = None
+
+            agent_string = agent_string.split()
+            
+            for word in agent_string:
+                try:
+                    if word.upper() in brands:
+                        brand_in_agent_string = word.upper()
+                        foundBrand = True
+                
+                except(AttributeError):
+                    print(word)
+            
+    
+            agent_string_response = {}
+            if foundBrand:
+                while(foundBrand):
+                    for word in agent_string:
+                        data = MyModel.objects.filter(
+                            manufacturer__startswith=brand_in_agent_string,
+                            model_number=word
+                        )
+                        data = list(data.values('energy_class', 'energy_class_sdr', 'energy_class_hdr'))
+                        if len(data) > 0:
+                            agent_string_response['agent-string_data'] = data
+                            foundBrand = False
+                    foundBrand = False
+            
+        else:
+            agent_string_response = {}
+            agent_string_response['agent-string_data'] = []
+
         TV_data = {}
 
-        if data['model'] != 'null' and data['brand'] != 'null':
-            TV_model = data['model']
-            TV_brand = data['brand'].upper()
+        if dataAPI['model'] != 'null' and dataAPI['brand'] != 'null':
+            TV_model = dataAPI['model']
+            TV_brand = dataAPI['brand'].upper()
+
             data = MyModel.objects.filter(
-                    manufacturer__startswith= TV_brand,
-                    model_number= TV_model
+                manufacturer__startswith= TV_brand.split()[0],
+                model_number = TV_model
                 )
+
             data = data.values('energy_class', 'energy_class_sdr', 'energy_class_hdr')
             TV_data['energy data'] = list(data)
             if len(data) == 0:
-                TV_data['energy data'] = 'No TV corresponds with TV sent in API request'
+                TV_data['energy data'] = 'No TV corresponds with brand and model sent in API request'
         
         mysql_connection = mysql.connector.connect(
             host="localhost",
@@ -79,7 +147,7 @@ def apiEndpoint(request):
             cursor.execute(sql_query)
             result = cursor.fetchall()
             peakTime = findPeak(result)
-            response = {"peak": peakTime, "energy data": TV_data}
+            response = {"peak": peakTime, "energy data": TV_data, "agent_string_data": agent_string_response}
             return JsonResponse(response)
 
             # find the current time and state how long in the response until peak time 
@@ -99,7 +167,7 @@ def apiEndpoint(request):
             cursor.execute(sql_query)
             result = cursor.fetchall()
             peakTime = findPeak(result)
-            response = {"peak": peakTime, "energy data": TV_data}
+            response = {"peak": peakTime, "energy data": TV_data, "agent_string_data": agent_string_response}
             return JsonResponse(response)
         else:
             return JsonResponse({'error': 'Error, refer to API page on website'}, status=400)
@@ -130,7 +198,7 @@ def findPeak(results):
             highest = result_dictionary[key]
             peakTime = key
 
-    return str(peakTime) + ' GMT'
+    return str(peakTime) + ' UTC'
 
 @require_POST
 def search(request):
@@ -270,22 +338,6 @@ def searchLibrary(request):
         print(e)
         return HttpResponse("Invalid request", status=400)
 
-
-@require_GET
-def show_documentation(request):
-    try:
-        if request.method == 'GET':
-            response = render(request,'documentation.html', context = None, content_type=None, using=None)
-          #  response["Access-Control-Allow-Origin"] = "localhost:8000/doc"
-          #  response["Access-Control-Allow-Methods"] = "GET, POST"
-          #  response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
-            return response
-
-    except Exception as e:
-            traceback.print_exc() 
-            print(e)
-            return HttpResponse("Invalid request", status=400)
-
 @require_GET
 def show_DataAnalytics_page(request):
     try:
@@ -332,29 +384,6 @@ def showLiveDashboardMonthly(request):
         print(e)
         return HttpResponse("Invalid request", status=400)
     
-@require_GET
-def getDashboardDaily(request):
-    try:
-        if request.method == 'GET':
-            response = render(request,'liveDashboardDailyPage.html', context = None, content_type=None, using=None)
-            return response
-    
-    except Exception as e:
-        traceback.print_exc() 
-        print(e)
-        return HttpResponse("Invalid request", status=400)
-    
-@require_GET 
-def getDashboardParsed(request):
-    try:
-        if request.method == 'GET':
-            response = render(request,'liveDashboardParserPage.html', context = None, content_type=None, using=None)
-            return response
-    
-    except Exception as e:
-        traceback.print_exc() 
-        print(e)
-        return HttpResponse("Invalid request", status=400)
 
 @require_GET
 def displayHomePage(request):
@@ -370,22 +399,6 @@ def displayHomePage(request):
         traceback.print_exc() 
         print(e)
         return HttpResponse("Invalid request", status=400)
-
-@require_GET
-def showExplanation(request):
-
-    try:
-        if request.method == 'GET':
-            print('gets here!')
-            response = render(request,'', context = None, content_type=None, using=None)
-            return response
-    
-    except Exception as e:
-        traceback.print_exc() 
-        print(e)
-        return HttpResponse("Invalid request", status=400)
-
-
 
 
 @require_GET
