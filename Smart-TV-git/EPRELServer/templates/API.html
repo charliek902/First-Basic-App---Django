@@ -39,8 +39,7 @@
         To specify the location please use (location JSON attributes are case insensitive): <p>
       <p class="indented-paragraph">
           North America <br>
-          inner London <br>
-          outer London <br>
+          London <br>
           Nairobi <br>
           Manchester <br>
           Scotland <br>
@@ -52,15 +51,29 @@
        To specify the brand please use the brand name. Examples of brands that would be recognized 
         include samsung, panasonic, TCL. Please note that brand names are case insensitive. 
        Please ensure that the model number is as accurate as possible as the model attribute of the JSON request is case sensitive. 
-      Alternatively, if the device is not a TV, please specify the TV model and brand within the JSON request as 'null'.</p>
+      Alternatively, if the device is not a TV, please specify the TV model and brand within the JSON request as 'null'.
+      Another attribute for the API request which can be used is the tv_agent_string JSON attribute where users can place 
+    the tv user agent string inside. </p>
       
       <p class="indented-paragraph">
       In response, the api will return a peak value which will represent the average peak data traffic time for that day.  The API will also return the overall energy class, the energy class in 
-        standard dynamic range and the energy class in high dynamic range if a TV is both included within the JSON request and within the site's TV database. Here is an example JSON response:
+        standard dynamic range and the energy class in high dynamic range if a TV is both included within the JSON request and within the site's TV database and 
+        in response the api will also return energy data corresponding to the user agent string if a tv user agent string is present within the API. Here is an example JSON request:
       </p>
       <p class="indented-paragraph">
         {
-          "peak": "09:00:00 GMT",
+          "location": "middle east",
+          "day": "saturday",
+          "model": "T1931SAW-B5 B",
+          "brand": "IIYAMA",
+          "tv_agent_string": "Mozilla/5.0 (SMART-TV; Linux; Tizen 6.0) AppleWebKit/537.36 (KHTML, like Gecko) 4.0 Chrome/76.0.3809.146 TV Safari/537.36"
+      } 
+    </p>
+
+      <p class="indented-paragraph"> and here is an example API response:</p>
+      <p class="indented-paragraph">
+        {
+          "peak": "20:00:00 UTC",
           "energy data": {
               "energy data": [
                   {
@@ -69,11 +82,20 @@
                       "energy_class_hdr": "NA"
                   }
               ]
+          },
+          "agent_string_data": {
+              "agent-string_data": [
+                  {
+                      "energy_class": "G",
+                      "energy_class_sdr": "G",
+                      "energy_class_hdr": "G"
+                  }
+              ]
           }
       }
       </p>
       <p class="indented-paragraph">Click on the link for an explanation for the energy metrics within the API JSON responses:</p>
-      <a class="indented-paragraph" href="https://commission.europa.eu/energy-climate-change-environment/standards-tools-and-labels/products-labelling-rules-and-requirements/energy-label-and-ecodesign/energy-efficient-products/electronic-displays-including-televisions_en" target="_blank">Energy product Registry</a>
+      <a class="indented-paragraph" href="https://commission.europa.eu/energy-climate-change-environment/standards-tools-and-labels/products-labelling-rules-and-requirements/energy-label-and-ecodesign/energy-efficient-products/electronic-displays-including-televisions_en" target="_blank" >Energy product Registry</a>
       <br>
       <br>
       <h2 class="indented-paragraph" class="centerHeader" class="subHeaders"> Invalid Responses and no corresponding TVs Response</h2>
@@ -101,7 +123,7 @@
         </p>
         <p class="indented-paragraph">
             {
-              "peak": "09:00:00 GMT",
+              "peak": "09:00:00 UTC",
               "energy data": {
                   "energy data": "No TV corresponds with TV sent in API request"
               }
@@ -115,6 +137,7 @@
             "day": "monday",
             "model": "HG75EJ690YA",
             "brand": "samsung"
+            "tv_agent_string": "Mozilla/5.0 (SMART-TV; Linux; Samsung 6.0) Model/HG50EJ690YA 4.0 Chrome/76.0.3809.146 TV Safari/537.36"
           }
         </p>
         <p class="indented-paragraph">
@@ -123,6 +146,8 @@
             "day": "Friday",
             "model": "null",
             "brand": "null"
+            "tv_agent_string": 'null'
+
           }
         </p>
 
