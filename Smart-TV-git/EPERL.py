@@ -43,7 +43,7 @@ def crawl_page(page_number, pagesNotCrawled):
     try:
         data = response.json()
         print(data)
-        hits = data['hits']  # List of items
+        hits = data['hits']  
 
         for item in hits:
             time.sleep(1)
@@ -108,14 +108,14 @@ def crawl_page(page_number, pagesNotCrawled):
         send_email("JSON decoding error occurred on page " + str(page_number), str(e))
         print("JSON decoding error occurred:", str(e))
         exit()
-#        pagesNotCrawled.append(page_number)
-#        time.sleep(600)
+        pagesNotCrawled.append(page_number)
+        time.sleep(600)
 
-#        next_page = page_number 
-#        if(validAPIRequest(next_page)):
-#            crawl_page(next_page, pagesNotCrawled)
-#        else:
-#            return pagesNotCrawled
+        next_page = page_number 
+        if(validAPIRequest(next_page)):
+            crawl_page(next_page, pagesNotCrawled)
+        else:
+            return pagesNotCrawled
 
 
 def validAPIRequest(page_number):
@@ -136,18 +136,15 @@ def validAPIRequest(page_number):
         return False
 
 
-# call it EPREL- screen and publication for new database
-# need new columns 
-
 def insert_into_database(model_number, manufacturer, power_on_mode_sdr, power_on_mode_hdr,
                          energy_class_sdr, energy_class, energy_class_hdr, screen_area, first_publication, 
                          on_market_start_date):
     try:
         connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="#Carlosknox1",
-            database="EPREL"
+            host="####",
+            user="####",
+            password="#####",
+            database="####"
         )
 
         if connection.is_connected():
