@@ -55,7 +55,6 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
 
   var jsonData = JSON.stringify(data);
 
-  // Send the AJAX request with the data
   xhr.send(jsonData);
 
   // Make the searching feature more dynamic...
@@ -121,7 +120,6 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
 
       searchingBar.style.display = 'none';
 
-      // Generate table rows
       response.data.forEach(rowData => {
         const tableRow = document.createElement('tr');
         for (const property in rowData) {
