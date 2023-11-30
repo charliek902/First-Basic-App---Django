@@ -41,10 +41,10 @@ def scrape_website():
     try:
 
         mysql_connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="#Carlosknox1",
-            database="LINX"
+            host="#####",
+            user="#####",
+            password="#####",
+            database="####"
         )
   
         session = requests.Session()
@@ -68,8 +68,6 @@ def scrape_website():
 
         region_data = {}
 
-        # the probelm here is that there is a region called "nail"
-       # aggregate.remove('nai1')
 
         for region in aggregate:
             region_data[region] = None
