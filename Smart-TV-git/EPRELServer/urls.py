@@ -31,7 +31,6 @@ urlpatterns = [
     path('TVDataParser/', views.show_DataAnalytics_page, name='data analytics'),
     path('APIPage/', views.showAPI, name= 'API'),
     path('liveDashboardPage/', views.showLiveDashboardMonthly, name='liveDashboard'),
-    path('liveDashboardPage/', views.showLiveDashboardMonthly, name='liveDashboard'),
     path('api/', views.apiEndpoint, name='apiEndpoint'),
     path('<path:undefined_path>/', views.display404, name='any_other_request'),
 ]

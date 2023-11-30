@@ -16,27 +16,28 @@
       <h2 class="indented-paragraph" class="centerHeader" class="subHeaders"> About this API</h2>
       <br>
 
-      <p class="indented-paragraph">The API for this website will allow clients to send json data specifying the location they are in, the time of day and what type of TV is being used. 
-        In response the API will return the time of peak data traffic for that day. </p>
-        <p class="indented-paragraph">Additionally, clients can also send the brands and model numbers of TVs to this API and in response, the API will 
-          send the energy class of the TV from A to G with A representing energy efficient and G representing energy inefficiency. </p>
-      <p class="indented-paragraph">If you are not within one of these areas, you can send a request to the API which will return the time of 
-        average peak data traffic amongst all of these regions. If your users are not using a TV, please specify the attributes model and brand within the JSON request as 'null'. </p>
+      <p class="indented-paragraph">The API for this website will allow clients to send json data specifying the location they are in, the day of the week and the TV their users/customers are using. 
+        In response the API will return the time of peak data traffic for that day along with energy use statistics relating to the TV that is sent within the API. </p>
+        <p class="indented-paragraph">To send TV information, clients will have to send the brands and model numbers of a TV. Alteratively, clients can also send user agent strings of a TV to this API. In response, the API will 
+          send the energy class of the TV from A to G (with A representing energy efficient and G representing energy inefficiency) and the API will also specify the time of peak data traffic within the location and day specified within the API request. </p>
+      <p class="indented-paragraph">If you are not within one of these locations (locations can be observed below), you can also send a request to the API which will return the time of 
+        average peak data traffic amongst all of these regions. If your users are not using a TV but you still wish to use the API, please specify the attributes model, brand and tv agent string attributes within the API JSON request as 'null'. </p>
 
       <h2 class="indented-paragraph" class="subHeaders"> How to use the API</h2>
       <br>
       <p class="indented-paragraph">To use this API, please send JSON post request to the url: http://localhost:8000/api/</p>
-      <p class="indented-paragraph">Within this post request you need to write the attributes location, day, brand and model like so: </p>
+      <p class="indented-paragraph">Within this post request you need to write the attributes location, day, brand, model and tv_agent_string like so: </p>
       <p class="indented-paragraph">
         {
           "location": "outer london",
           "day": "saturday", 
           "brand": "samsung",
-          "model": "HG50EJ690YA"
+          "model": "HG50EJ690YA",
+          "tv_agent_string": "Mozilla/5.0 (SMART-TV; Linux; Tizen 6.0) AppleWebKit/537.36 (KHTML, like Gecko) 4.0 Chrome/76.0.3809.146 TV Safari/537.36"
         }
       </p>
       <p class="indented-paragraph">
-        To specify the location please use (location JSON attributes are case insensitive): <p>
+        To specify the location please use the locations below (location JSON attributes are case insensitive): <p>
       <p class="indented-paragraph">
           North America <br>
           London <br>
@@ -51,14 +52,12 @@
        To specify the brand please use the brand name. Examples of brands that would be recognized 
         include samsung, panasonic, TCL. Please note that brand names are case insensitive. 
        Please ensure that the model number is as accurate as possible as the model attribute of the JSON request is case sensitive. 
-      Alternatively, if the device is not a TV, please specify the TV model and brand within the JSON request as 'null'.
-      Another attribute for the API request which can be used is the tv_agent_string JSON attribute where users can place 
-    the tv user agent string inside. </p>
+      Alternatively, if the device is not a TV, please specify the model, brand and tv user agent string attributes within the JSON request as 'null'.
+       </p>
       
       <p class="indented-paragraph">
-      In response, the api will return a peak value which will represent the average peak data traffic time for that day.  The API will also return the overall energy class, the energy class in 
-        standard dynamic range and the energy class in high dynamic range if a TV is both included within the JSON request and within the site's TV database and 
-        in response the api will also return energy data corresponding to the user agent string if a tv user agent string is present within the API. Here is an example JSON request:
+      In response, the api will return a peak value which will represent the average peak data traffic time for that day within the location specified.  The API will also return the overall energy class, the energy class in 
+        standard dynamic range and the energy class in high dynamic range if a TV is included within the JSON request. Here is an example JSON request:
       </p>
       <p class="indented-paragraph">
         {
@@ -122,12 +121,13 @@
           the API will respond like so:
         </p>
         <p class="indented-paragraph">
-            {
-              "peak": "09:00:00 UTC",
-              "energy data": {
-                  "energy data": "No TV corresponds with TV sent in API request"
-              }
-          }
+          {
+            "peak": "20:00:00 UTC",
+            "energy data": {
+                "energy data": "No TV corresponds with brand and model sent in API request"
+            },
+            "agent_string_data": {}
+        }
         </p>
         <h2 class="indented-paragraph" class="centerHeader" class="subHeaders"> Here are some valid JSON request examples</h2>
         <br>
