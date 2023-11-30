@@ -143,15 +143,12 @@ def apiEndpoint(request):
                 f"ORDER BY hour;"
             )
 
-            # timestamp BETWEEN CURRENT_DATE - INTERVAL 1 MONTH AND CURRENT_DATE - INTERVAL 1 DAY AND
             cursor.execute(sql_query)
             result = cursor.fetchall()
             peakTime = findPeak(result)
             response = {"peak": peakTime, "energy data": TV_data, "agent_string_data": agent_string_response}
             return JsonResponse(response)
 
-            # find the current time and state how long in the response until peak time 
-            # if time is within an hour of peak time --> state what you need to do
         elif location == 'general':
             cursor = mysql_connection.cursor()
             sql_query = (
@@ -173,7 +170,7 @@ def apiEndpoint(request):
             return JsonResponse({'error': 'Error, refer to API page on website'}, status=400)
 
 def findPeak(results):
-    # making a dictionary that associates keys with the average total minutes of the month 
+ 
     result_dictionary = dict()
 
     for result in results:
@@ -185,12 +182,12 @@ def findPeak(results):
         else:
             result_dictionary[hour].append(result[1])
 
-    # now need to find the averages associated with each array
+   
     for key in result_dictionary.keys():
         allValuesForTime = result_dictionary[key]
         result_dictionary[key] = sum(allValuesForTime) / len(allValuesForTime)
 
-    # find the hour with the highest average data traffic 
+  
     highest = 0
     peakTime = 0
     for key in result_dictionary.keys():
@@ -253,7 +250,6 @@ def search(request):
 
         response = JsonResponse(response_data)
 
-        # Set the CORS headers
         response["Access-Control-Allow-Origin"] = "localhost:8000"
         response["Access-Control-Allow-Methods"] = "GET, POST"
         response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
@@ -285,21 +281,12 @@ def parse_excel(request):
             # Rename the columns in 'df'
             df.rename(columns={'device_brand': 'manufacturer', 'device_model': 'model_number'}, inplace=True)
             
-            # Merge 'df' with 'model_df' based on 'manufacturer' and 'model_number'
             merged_df = pd.merge(df, model_df, on=['manufacturer', 'model_number'], how='left')
 
-            # Fill NaN values in the merged columns with a specific value (e.g., 'N/A')
             merged_df.fillna('N/A', inplace=True)
 
-            # Drop rows where values are not present in both databases
             merged_df.dropna(subset=['power_on_mode_sdr', 'power_on_mode_hdr', 'energy_class', 'energy_class_sdr', 'energy_class_hdr'], inplace=True)
 
-            # Rename the columns in 'df'
-
-           # df.rename(columns={'manufacturer': 'device_brand', 'model_number': 'device_model'}, inplace=True)
-           # df.rename(columns={'power_on_mode_sdr': 'Standard dynamic Range (Watts)', 'power_on_mode_hdr': 'High Dynamic Range (Watts)'}, inplace=True)
-            #df.rename(columns={'energy_class': 'energy_class (A-G)', 'energy_class_sdr': 'energy_class_sdr (A-G)', 'energy_class_hdr': 'energy_class_hdr (A-G)'}, inplace=True)
-            
             excel_file = io.BytesIO()
             with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
                 merged_df.to_excel(writer, index=False, sheet_name='Sheet1')
