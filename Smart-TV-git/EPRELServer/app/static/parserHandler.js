@@ -11,14 +11,11 @@ document.getElementById('parse').addEventListener('submit', function(event) {
     var data = new FormData();
     data.append('file', file);  // Add the file object to the FormData objec
   
-    // Send the AJAX request with the FormData object
     xhr.send(data);
   
-  
-    // Configure the response type to 'blob'
+
     xhr.responseType = 'blob';
   
-    // Handle the response
     xhr.onload = function() {
       if (xhr.status === 200) {
         // Create a download link element
@@ -26,7 +23,6 @@ document.getElementById('parse').addEventListener('submit', function(event) {
         downloadLink.href = window.URL.createObjectURL(xhr.response);
         downloadLink.download = 'output.xlsx';
         
-        // Trigger the download
         downloadLink.click();
       }
       
