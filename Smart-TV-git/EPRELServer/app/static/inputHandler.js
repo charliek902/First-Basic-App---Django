@@ -43,7 +43,7 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
 
   var xhr = new XMLHttpRequest();
 
-  xhr.open('POST', 'http://localhost:8000/api/search/', true);
+  xhr.open('POST', "{% url 'search' %}", true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('X-CSRFToken', csrfToken); // Include the CSRF token
 

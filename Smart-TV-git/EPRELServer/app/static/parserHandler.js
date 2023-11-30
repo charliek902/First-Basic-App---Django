@@ -3,7 +3,7 @@ document.getElementById('parse').addEventListener('submit', function(event) {
   
     var xhr = new XMLHttpRequest();
   
-    xhr.open('POST', 'api/parse_excel/', true);
+    xhr.open('POST', "{% url 'parse_excel' %}", true);
     xhr.setRequestHeader('X-CSRFToken', csrfToken); // Include the CSRF token
     var fileInput = document.getElementById('FileInput');
     var file = fileInput.files[0];
