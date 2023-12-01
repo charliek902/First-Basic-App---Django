@@ -124,9 +124,9 @@ def apiEndpoint(request):
                 TV_data['energy data'] = 'No TV corresponds with brand and model sent in API request'
         
         mysql_connection = mysql.connector.connect(
-            host="localhost",
+            host="127.0.0.1",
             user="root",
-            password="#Carlosknox1",
+            password=settings.DATABASES['default']['PASSWORD'],
             database="LINX"
         )
 
