@@ -14,6 +14,7 @@ import io
 import mysql.connector
 from datetime import datetime
 import requests
+from django.conf import settings
 
 @csrf_exempt
 @require_POST 
@@ -51,7 +52,7 @@ def apiEndpoint(request):
             mysql_connection = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="#Carlosknox1",
+                password=settings.DATABASES['default']['PASSWORD'],
                 database="EPREL"
             )
             sql_query = (
