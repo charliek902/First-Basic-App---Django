@@ -50,7 +50,7 @@ def apiEndpoint(request):
             agent_string = agent_string.replace(',', ' ')
             agent_string = agent_string.replace(';', ' ')
             mysql_connection = mysql.connector.connect(
-                host="localhost",
+                host="127.0.0.1",
                 user="root",
                 password=settings.DATABASES['default']['PASSWORD'],
                 database="EPREL"
