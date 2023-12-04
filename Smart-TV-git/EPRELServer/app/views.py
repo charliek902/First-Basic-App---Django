@@ -75,6 +75,7 @@ def apiEndpoint(request):
                     brands.add(main_brand)
                 else:
                     main_brand = result['manufacturer']
+                    brands.add(main_brand)
 
             brand_in_agent_string = None
 
