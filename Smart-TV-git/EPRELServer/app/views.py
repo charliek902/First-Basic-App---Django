@@ -90,18 +90,18 @@ def apiEndpoint(request):
             
     
             agent_string_response = {}
+            import pdb; pdb.set_trace()
             if foundBrand:
-                while(foundBrand):
-                    for word in agent_string:
-                        data = MyModel.objects.filter(
-                            manufacturer__startswith=brand_in_agent_string,
-                            model_number=word
-                        )
-                        data = list(data.values('energy_class', 'energy_class_sdr', 'energy_class_hdr'))
-                        if len(data) > 0:
-                            agent_string_response['agent-string_data'] = data
-                            foundBrand = False
-                    foundBrand = False
+                
+                for word in agent_string:
+                    data = MyModel.objects.filter(
+                        manufacturer__startswith=brand_in_agent_string,
+                        model_number=word
+                    )
+                    data = list(data.values('energy_class', 'energy_class_sdr', 'energy_class_hdr'))
+                    if len(data) > 0:
+                        agent_string_response['agent-string_data'] = data
+
             
         else:
             agent_string_response = {}
