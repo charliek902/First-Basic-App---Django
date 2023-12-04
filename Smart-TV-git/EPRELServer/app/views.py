@@ -65,6 +65,7 @@ def apiEndpoint(request):
 
             foundBrand = False
 
+            import pdb; pdb.set_trace()
             for result in results:
                 if result['manufacturer'] is None:
                     #for some reason the continue keyword here caused the program to break... 
@@ -90,7 +91,7 @@ def apiEndpoint(request):
             
     
             agent_string_response = {}
-            import pdb; pdb.set_trace()
+            
             if foundBrand:
                 
                 for word in agent_string:
