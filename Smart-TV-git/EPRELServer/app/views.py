@@ -96,7 +96,7 @@ def apiEndpoint(request):
             
             if foundBrand:
 
-                import pdb; pdb.set_trace()
+                #import pdb; pdb.set_trace()
                 
                 for word in agent_string:
                     
@@ -104,8 +104,9 @@ def apiEndpoint(request):
                         manufacturer__istartswith=brand_in_agent_string,
                         model_number=word
                     )
-                    data = list(data.values('energy_class', 'energy_class_sdr', 'energy_class_hdr'))
                     print(word, data, data.query)
+                    data = list(data.values('energy_class', 'energy_class_sdr', 'energy_class_hdr'))
+                   
                     if len(data) > 0:
                         agent_string_response['agent-string_data'] = data
 
