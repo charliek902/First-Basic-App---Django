@@ -13,9 +13,9 @@ url = 'https://portal.linx.net/api/public/stats/snmp/lans?period=week&metric=bit
 
 def send_email(subject, body):
 
-    sender_email = "charlieknox2@hotmail.com"
-    receiver_email = "ir22593@bristol.ac.uk"
-    password = "#rl764jghung"
+    sender_email = "#####"
+    receiver_email = "####"
+    password = "####"
 
     message = MIMEMultipart()
     message["From"] = sender_email
@@ -100,7 +100,7 @@ def scrape_website():
             print(f"Region: {region}, Value: {value} {unit}, Timestamp: {timestamp}, Time: {time}")
             print("Data scraped successfully")
     
-        csv_file_path = "/Users/charlieknox/Desktop/file.csv"
+        csv_file_path = "#####/file.csv"
         try:
             with open(csv_file_path, "a", newline="") as csvfile:
                 csv_writer = csv.writer(csvfile)
