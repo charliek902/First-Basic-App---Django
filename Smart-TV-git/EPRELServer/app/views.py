@@ -77,12 +77,10 @@ def apiEndpoint(request):
                     main_brand = result['manufacturer']
                     brands.add(main_brand.upper())
 
-            print(brands)
-
             brand_in_agent_string = None
 
             agent_string = agent_string.split()
-            import pdb; pdb.set_trace()
+            
             
             for word in agent_string:
                 try:
@@ -97,13 +95,17 @@ def apiEndpoint(request):
             agent_string_response = {}
             
             if foundBrand:
+
+                import pdb; pdb.set_trace()
                 
                 for word in agent_string:
+                    
                     data = MyModel.objects.filter(
-                        manufacturer__startswith=brand_in_agent_string,
+                        manufacturer__istartswith=brand_in_agent_string,
                         model_number=word
                     )
                     data = list(data.values('energy_class', 'energy_class_sdr', 'energy_class_hdr'))
+                    print(word, data)
                     if len(data) > 0:
                         agent_string_response['agent-string_data'] = data
 
