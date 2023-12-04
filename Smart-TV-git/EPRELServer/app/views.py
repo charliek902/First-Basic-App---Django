@@ -65,11 +65,11 @@ def apiEndpoint(request):
 
             foundBrand = False
 
-            import pdb; pdb.set_trace()
+            #import pdb; pdb.set_trace()
             for result in results:
                 if result['manufacturer'] is None:
                     #for some reason the continue keyword here caused the program to break... 
-                    break
+                    continue
                 elif len(result['manufacturer'].split()) > 1:
                     main_brand = result['manufacturer'].split()[0]
                     brands.add(main_brand)
