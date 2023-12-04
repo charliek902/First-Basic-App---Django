@@ -1,2 +1,3 @@
 # Smart-TV-site
 
+Inside this directory is a small application along with the web crawlers and web scapers I utilised during my masters dissertation in Computer Science 
