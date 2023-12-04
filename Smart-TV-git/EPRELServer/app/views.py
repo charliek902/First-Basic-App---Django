@@ -72,14 +72,17 @@ def apiEndpoint(request):
                     continue
                 elif len(result['manufacturer'].split()) > 1:
                     main_brand = result['manufacturer'].split()[0]
-                    brands.add(main_brand)
+                    brands.add(main_brand.upper())
                 else:
                     main_brand = result['manufacturer']
-                    brands.add(main_brand)
+                    brands.add(main_brand.upper())
+
+            print(brands)
 
             brand_in_agent_string = None
 
             agent_string = agent_string.split()
+            import pdb; pdb.set_trace()
             
             for word in agent_string:
                 try:
