@@ -87,6 +87,7 @@ def apiEndpoint(request):
                     if word.upper() in brands:
                         brand_in_agent_string = word.upper()
                         foundBrand = True
+                        break
                 
                 except(AttributeError):
                     print(word)
