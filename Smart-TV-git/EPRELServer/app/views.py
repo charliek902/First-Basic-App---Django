@@ -105,7 +105,7 @@ def apiEndpoint(request):
                         model_number=word
                     )
                     data = list(data.values('energy_class', 'energy_class_sdr', 'energy_class_hdr'))
-                    print(word, data)
+                    print(word, data, data.query)
                     if len(data) > 0:
                         agent_string_response['agent-string_data'] = data
 
