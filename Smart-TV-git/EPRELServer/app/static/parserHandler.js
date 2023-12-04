@@ -2,7 +2,7 @@ document.getElementById('parse').addEventListener('submit', function(event) {
     event.preventDefault();
   
     var xhr = new XMLHttpRequest();
-  
+
     xhr.open('POST', "{% url 'parse_excel' %}", true);
     xhr.setRequestHeader('X-CSRFToken', csrfToken); // Include the CSRF token
     var fileInput = document.getElementById('FileInput');
@@ -12,7 +12,6 @@ document.getElementById('parse').addEventListener('submit', function(event) {
     data.append('file', file);  // Add the file object to the FormData objec
   
     xhr.send(data);
-  
 
     xhr.responseType = 'blob';
   

@@ -25,7 +25,7 @@ def extract_date(datetime_str):
     return date_only
 
 
-def crawl_page(page_number, pagesNotCrawled):
+def crawl_page(page_number):
     url = 'https://eprel.ec.europa.eu/api/products/electronicdisplays'
     params = {
         '_page': page_number,
@@ -62,29 +62,13 @@ def crawl_page(page_number, pagesNotCrawled):
                 first_publication = timestamp_to_datetime(first_publication_date)
                 first_publication = extract_date(first_publication)
 
-    
-                # Print the extracted information
-                print("------------")
-                print("Model Number:", model_number)
-                print("Manufacturer:", manufacturer)
-                print("Power On Mode (SDR):", power_on_mode_sdr)
-                print("Power On Mode (HDR):", power_on_mode_hdr)
-                print("Energy Class (SDR):", energy_class_sdr)
-                print("Energy Class:", energy_class)
-                print("Energy Class HDR:", energy_class_hdr)
-                print("Screen area:", screen_area)
-                print("First publication date: ", first_publication)
-                print("First on market: ", on_market_start_date)
-                print(page_number)
-                print("------------")
 
 
-                # Insert the data into the SQL database
                 insert_into_database(model_number, manufacturer, power_on_mode_sdr, power_on_mode_hdr,
                                      energy_class_sdr, energy_class, energy_class_hdr, screen_area, 
                                      first_publication, on_market_start_date)
 
-                # Insert the data into the CSV file
+          
                 insert_into_csv(model_number, manufacturer, power_on_mode_sdr, power_on_mode_hdr,
                                 energy_class_sdr, energy_class, energy_class_hdr, screen_area, 
                                 first_publication, on_market_start_date)
@@ -92,30 +76,22 @@ def crawl_page(page_number, pagesNotCrawled):
             except KeyError as e:
                 print("Skipping device due to missing key:", e)
 
-        # Check if there are more pages to crawl
+
         if len(data) > 0:
-            page_number -= 1
-            if page_number == 210:
-                exit()
-            print("finished")
+            page_number += 1
             random1 = random.randint(0,9)
             time.sleep(random1)
-            crawl_page(page_number, pagesNotCrawled)
+            crawl_page(page_number)
         else:
             print("No more pages to crawl.")
+            exit()
 
     except requests.exceptions.JSONDecodeError as e:
         send_email("JSON decoding error occurred on page " + str(page_number), str(e))
         print("JSON decoding error occurred:", str(e))
+        retry_crawl_page(page_number)
         exit()
-        pagesNotCrawled.append(page_number)
-        time.sleep(600)
 
-        next_page = page_number 
-        if(validAPIRequest(next_page)):
-            crawl_page(next_page, pagesNotCrawled)
-        else:
-            return pagesNotCrawled
 
 
 def validAPIRequest(page_number):
@@ -162,10 +138,7 @@ def insert_into_database(model_number, manufacturer, power_on_mode_sdr, power_on
 
     except Error as e:
         print("Error inserting data into the database:", e)
-
-    finally:
-        if connection.is_connected():
-            connection.close()
+        retry_crawl_page(page_number)
 
 
 def insert_into_csv(model_number, manufacturer, power_on_mode_sdr, power_on_mode_hdr,
@@ -179,14 +152,13 @@ def insert_into_csv(model_number, manufacturer, power_on_mode_sdr, power_on_mode
         print("Data exported to CSV successfully")
     except Exception as e:
         error_message = 'An error occurred while exporting data to CSV: ' + str(e)
-        print(error_message)
         send_email("Error occurred during data export", error_message)
         retry_crawl_page(page_number)
     
-def retry_crawl_page(page_number, pagesNotCrawled):
+def retry_crawl_page(page_number):
     random = random.randint(0,9)
     time.sleep(5 + 10*random)
-    crawl_page(page_number, pagesNotCrawled)
+    crawl_page(page_number)
 
 
 def send_email(subject, body):
@@ -211,8 +183,8 @@ def send_email(subject, body):
         print(error_message)
 
 
-page_number = 210
-pagesNotCrawled = []
+page_number = 1
+crawl_page(page_number)
 
-pagesNotCrawled = crawl_page(page_number, pagesNotCrawled)
+
 

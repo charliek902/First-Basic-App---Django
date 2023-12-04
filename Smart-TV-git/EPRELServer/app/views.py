@@ -251,9 +251,9 @@ def search(request):
 
         response = JsonResponse(response_data)
 
-        response["Access-Control-Allow-Origin"] = "localhost:8000"
-        response["Access-Control-Allow-Methods"] = "GET, POST"
-        response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
+      #  response["Access-Control-Allow-Origin"] = "localhost:8000"
+     #   response["Access-Control-Allow-Methods"] = "GET, POST"
+      #  response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
 
         return response
     else:

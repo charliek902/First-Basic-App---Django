@@ -25,8 +25,8 @@ from django.views.static import serve
 urlpatterns = [
 
     path('', views.displayHomePage, name='home'),
+    path('search/api/search/', views.search, name='search'),
     path('search/', views.searchLibrary, name='searchLibrary'),
-    path('api/search/', views.search, name='search'),
     path('TVDataParser/api/parse_excel/', views.parse_excel, name='parse_excel'),
     path('TVDataParser/', views.show_DataAnalytics_page, name='data analytics'),
     path('APIPage/', views.showAPI, name= 'API'),
@@ -34,6 +34,7 @@ urlpatterns = [
     path('api/', views.apiEndpoint, name='apiEndpoint'),
     path('<path:undefined_path>/', views.display404, name='any_other_request'),
 ]
+
 
 
 
