@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
+import corsheaders
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
