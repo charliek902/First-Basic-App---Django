@@ -40,7 +40,7 @@ SECRET_KEY = 'django-insecure-t^11)u55g%303!3tzo)1umj%m27d&nyp36&1rahw%^8@98b4*c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']  # Replace with your new domain or server's hostname
+ALLOWED_HOSTS = ['localhost', 'reduce-tv-energy.com']  # Replace with your new domain or server's hostname
 
 # Application definition
 
