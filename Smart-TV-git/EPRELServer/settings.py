@@ -90,14 +90,14 @@ WSGI_APPLICATION = 'EPRELServer.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-        'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'EPREL',
-        'USER': 'root',
-        'PASSWORD': '#Carlosknox1',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+'default': {
+ 'ENGINE': 'django.db.backends.mysql',
+ 'NAME': 'smart_tv_library',
+'USER': 'root',
+ 'PASSWORD': 'h7FP2qtuLTO@',
+ 'HOST': '127.0.0.1',
+'PORT': '3306',
+}
 }
 
 
