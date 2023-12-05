@@ -44,7 +44,6 @@ def apiEndpoint(request):
         agent_string = dataAPI['tv_agent_string']
         if agent_string != 'null':
             agent_string = agent_string.replace('/', ' ')
-            agent_string = agent_string.replace('-', ' ')
             agent_string = agent_string.replace('(', ' ')
             agent_string = agent_string.replace(')', ' ')
             agent_string = agent_string.replace(',', ' ')
@@ -110,6 +109,7 @@ def apiEndpoint(request):
                    
                     if len(data) > 0:
                         agent_string_response['agent-string_data'] = data
+                        break
 
             
         else:
