@@ -14,7 +14,6 @@ import os
 from pathlib import Path
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
-import corsheaders
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,7 +40,7 @@ SECRET_KEY = 'django-insecure-t^11)u55g%303!3tzo)1umj%m27d&nyp36&1rahw%^8@98b4*c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'reduce-tv-energy.com']  # Replace with your new domain or server's hostname
+ALLOWED_HOSTS = ['localhost', 'reduce-tv-energy.com']  
 
 # Application definition
 
@@ -52,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'corsheaders',
     'EPRELServer'
 ]
 
