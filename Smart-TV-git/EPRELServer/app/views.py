@@ -260,10 +260,6 @@ def search(request):
 
         response = JsonResponse(response_data)
 
-      #  response["Access-Control-Allow-Origin"] = "localhost:8000"
-     #   response["Access-Control-Allow-Methods"] = "GET, POST"
-      #  response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
-
         return response
     else:
         return HttpResponseBadRequest("Invalid request method")
@@ -307,10 +303,6 @@ def parse_excel(request):
             excel_file.seek(0)
             response.write(excel_file.getvalue())
 
-                # Set the CORS headers
-          #  response["Access-Control-Allow-Origin"] = "localhost:8000"
-          #  response["Access-Control-Allow-Methods"] = "GET, POST"
-         #   response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
     except Exception as e:
         traceback.print_exc()  
@@ -325,9 +317,6 @@ def searchLibrary(request):
 
         if request.method == 'GET':
             response = render(request,'searchLibrary.html', context = None, content_type=None, using=None)
-          # response["Access-Control-Allow-Origin"] = "localhost:8000"
-          #  response["Access-Control-Allow-Methods"] = "GET, POST"
-           # response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
             
     except Exception as e:
@@ -341,9 +330,6 @@ def show_DataAnalytics_page(request):
 
         if request.method == 'GET':
             response = render(request,'dataAnalytics.html', context = None, content_type=None, using=None)
-          #  response["Access-Control-Allow-Origin"] = "localhost:8000/doc"
-          #  response["Access-Control-Allow-Methods"] = "GET, POST"
-          #  response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
 
     except Exception as e:
@@ -356,9 +342,6 @@ def showAPI(request):
     try:
         if request.method == 'GET':
             response = render(request,'API.html', context = None, content_type=None, using=None)
-            #  response["Access-Control-Allow-Origin"] = "localhost:8000/doc"
-            #  response["Access-Control-Allow-Methods"] = "GET, POST"
-            #  response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
 
     except Exception as e:
@@ -371,9 +354,6 @@ def showLiveDashboardMonthly(request):
     try:
         if request.method == 'GET':
             response = render(request,'liveDashboardPage.html', context = None, content_type=None, using=None)
-            #  response["Access-Control-Allow-Origin"] = "localhost:8000/doc"
-            #  response["Access-Control-Allow-Methods"] = "GET, POST"
-            #  response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
 
     except Exception as e:
@@ -387,9 +367,6 @@ def displayHomePage(request):
     try:
         if request.method == 'GET':
             response = render(request,'home.html', context = None, content_type=None, using=None)
-            #  response["Access-Control-Allow-Origin"] = "localhost:8000/doc"
-            #  response["Access-Control-Allow-Methods"] = "GET, POST"
-            #  response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
 
     except Exception as e:
@@ -403,9 +380,6 @@ def display404(request, undefined_path):
     try:
         if undefined_path:
             response = render(request,'404.html', context = None, content_type=None, using=None)
-            #  response["Access-Control-Allow-Origin"] = "localhost:8000/doc"
-            #  response["Access-Control-Allow-Methods"] = "GET, POST"
-            #  response["Access-Control-Allow-Headers"] = "Accept, Content-Type"
             return response
 
     except Exception as e:
