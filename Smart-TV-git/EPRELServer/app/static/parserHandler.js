@@ -4,12 +4,12 @@ document.getElementById('parse').addEventListener('submit', function(event) {
     var xhr = new XMLHttpRequest();
 
     xhr.open('POST', parserUrl, true);
-    xhr.setRequestHeader('X-CSRFToken', csrfToken); // Include the CSRF token
+    xhr.setRequestHeader('X-CSRFToken', csrfToken); 
     var fileInput = document.getElementById('FileInput');
     var file = fileInput.files[0];
   
     var data = new FormData();
-    data.append('file', file);  // Add the file object to the FormData objec
+    data.append('file', file);  
   
     xhr.send(data);
 
@@ -24,16 +24,6 @@ document.getElementById('parse').addEventListener('submit', function(event) {
         
         downloadLink.click();
       }
-      
-      /*
-      elif (xhr.status === 500){
-        console.log('gets here');
-        var errorResponse = document.createElement('p');
-        errorResponse.innerHTML = 'Error when parsing. Refer to the documentation page';
-        var space = document.getElementById('parseError');
-        space.append(errorResponse);
-      }
-      */
     };
   });
 
