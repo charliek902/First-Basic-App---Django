@@ -4,3 +4,4 @@ Inside this directory is a small application along with the web crawlers and web
 
 Technologies used: HTML5, CSS, Javascript, Django (Python), MySQL and AWS 
 
+For a better full stack application - please view my 'Social Media' project. 
