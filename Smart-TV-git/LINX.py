@@ -31,7 +31,6 @@ def send_email(subject, body):
             server.send_message(message)
     except Exception as e:
         error_message = 'An error occurred while sending the email: ' + str(e)
-        print(error_message)
 
 def timestamp_to_datetime(timestamp):
     dt = datetime.datetime.fromtimestamp(timestamp)
@@ -81,7 +80,6 @@ def scrape_website():
             else:
                 continue
         
-        print(region_data)
 
         cursor = None
         cursor = mysql_connection.cursor()
