@@ -48,14 +48,11 @@ def scrape_website():
     cursor = None  # Initialize the cursor variable
 
     try:
-        # Set up the requests session
         session = requests.Session()
 
-        # Fetch the JSON data from the URL
         response = session.get(url)
         json_data = response.json()
 
-        # Parse and interpret the JSON data
         aggregate = json_data['aggregate']
         throughput_data = json_data['throughput']['aggregate']['in']['ipv4']['data']
 
@@ -69,10 +66,8 @@ def scrape_website():
             print("No throughput data available")
             return
 
-        # Create a dictionary to store the aggregate data for each region
         region_data = {}
 
-        # Assign the bitrate value at the latest common timestamp to each region
         for region in aggregate:
             region_data[region] = None
             region_throughput_data = json_data['throughput'][region]['in']['ipv4']['data']
@@ -85,7 +80,6 @@ def scrape_website():
             else:
                 continue
 
-        # Process the extracted data and insert it into the MySQL database
         cursor = mysql_connection.cursor()
         try:
             for region, data in region_data.items():
@@ -95,7 +89,6 @@ def scrape_website():
                 timestamp, value = data
                 time = timestamp_to_datetime(timestamp)
 
-                # Check if the data already exists in the database
                 query = "SELECT * FROM region_data WHERE region = %s AND timestamp = %s"
                 cursor.execute(query, (region, time))
                 result = cursor.fetchone()
@@ -110,7 +103,6 @@ def scrape_website():
 
             print("Data scraped successfully")
 
-            # Export data to a CSV file
             csv_file_path = "/#####/flowFile.csv"
             try:
                 with open(csv_file_path, "a", newline="") as csvfile:
@@ -141,13 +133,11 @@ def scrape_website():
 
 
     finally:
-        # Close the session and MySQL connection
         session.close()
         if cursor:
             cursor.close()
         mysql_connection.close()
 
-# Run the scraping process indefinitely
 while True:
     scrape_website()
     time.sleep(wait_time)
