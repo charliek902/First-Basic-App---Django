@@ -9,7 +9,7 @@ import datetime
 import mysql.connector
 
 url = 'https://portal.linx.net/api/public/stats/snmp/lans?period=week&metric=bitrate'
-# Time to wait between each scraping iteration (in seconds)
+
 
 def send_email(subject, body):
 
@@ -50,7 +50,6 @@ def scrape_website():
         response = session.get(url)
         json_data = response.json()
 
-        # Parse and interpret the JSON data
         aggregate = json_data['aggregate']
         throughput_data = json_data['throughput']['aggregate']['in']['data']
 
