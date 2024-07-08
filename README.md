@@ -1,6 +1,7 @@
-# Smart-TV-site
+# Web Scrapers 
 
-Inside this directory is a small application along with the web crawlers and web scapers I utilised during my masters (conversion masters) dissertation in Computer Science
+Here are the web scrapers I used during my Masters 
 
-Technologies used: HTML5, CSS, Javascript, Django (Python), MySQL and AWS 
+
+
 
